@@ -48,39 +48,50 @@ fun CategoryScreen(navController: NavHostController, viewModel: RestaurantViewMo
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("FoodSpot",
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF571E0D)
-                    ))
-                }
-
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = "🍽️ FoodSpot",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontFamily = FontFamily.SansSerif,
+                            fontWeight = FontWeight.ExtraBold,
+                            fontSize = 24.sp,
+                            color = Color.Black
+                        )
+                    )
+                },
+                modifier = Modifier.background(Color(0xFF812B12))
             )
         },
         content = { paddingValues ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues),
+                    .padding(paddingValues)
+                    .background(Color(0xFFF9F5F2)),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(12.dp)
                 ) {
                     categories.forEach { (category, restaurants) ->
                         item {
                             Text(
                                 text = category,
-                                modifier = Modifier.padding(vertical = 8.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 12.dp)
+                                    .background(
+                                        color = Color(0xFFFAE1DC),
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                    .padding(8.dp),
                                 fontSize = 20.sp,
-                                fontWeight = FontWeight.Medium,
+                                fontWeight = FontWeight.Bold,
                                 color = Color(0xFF812B12)
-
                             )
                         }
 
@@ -88,39 +99,41 @@ fun CategoryScreen(navController: NavHostController, viewModel: RestaurantViewMo
                             LazyRow(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(8.dp)
-                                    .clip(RoundedCornerShape(25.dp))
-                                    .background(Color(0xFFE1DFDF)),
-                                horizontalArrangement = Arrangement.Center
+                                    .padding(bottom = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
                                 items(restaurants) { restaurant ->
                                     Card(
                                         modifier = Modifier
-                                            .padding(10.dp)
+                                            .size(width = 160.dp, height = 200.dp)
                                             .clickable {
                                                 navController.navigate(Screen.Restaurant.createRoute(restaurant.id))
                                             },
-                                        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5C9B9))
+                                        shape = RoundedCornerShape(16.dp),
+                                        elevation = CardDefaults.cardElevation(8.dp),
+                                        colors = CardDefaults.cardColors(containerColor = Color.White)
                                     ) {
                                         Column(
-                                            modifier = Modifier
-                                                .padding(8.dp)
-                                                .fillMaxWidth(),
-                                            horizontalAlignment = Alignment.CenterHorizontally
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.Top,
+                                            modifier = Modifier.padding(8.dp)
                                         ) {
                                             Image(
                                                 painter = painterResource(id = restaurant.imageUrl),
                                                 contentDescription = "Imagen del Restaurante",
                                                 modifier = Modifier
-                                                    .size(100.dp)
-                                                    .padding(bottom = 8.dp),
-                                                contentScale = ContentScale.Fit
+                                                    .size(120.dp)
+                                                    .clip(RoundedCornerShape(12.dp)),
+                                                contentScale = ContentScale.Crop
                                             )
                                             Text(
                                                 text = restaurant.name,
-                                                style = MaterialTheme.typography.bodyLarge,
+                                                style = MaterialTheme.typography.bodyLarge.copy(
+                                                    fontWeight = FontWeight.SemiBold
+                                                ),
                                                 maxLines = 1,
-                                                overflow = TextOverflow.Ellipsis
+                                                overflow = TextOverflow.Ellipsis,
+                                                modifier = Modifier.padding(top = 8.dp)
                                             )
                                         }
                                     }
@@ -131,16 +144,6 @@ fun CategoryScreen(navController: NavHostController, viewModel: RestaurantViewMo
                 }
             }
         },
-        bottomBar = { BottomNavigationBar(navController)}
-    )
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewCategoryScreen() {
-    CategoryScreen(
-        navController = rememberNavController(),
-        viewModel = RestaurantViewModel()
+        bottomBar = { BottomNavigationBar(navController) }
     )
 }

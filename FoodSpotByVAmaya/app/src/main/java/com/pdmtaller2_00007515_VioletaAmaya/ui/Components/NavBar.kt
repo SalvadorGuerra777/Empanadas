@@ -16,10 +16,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.pdmtaller2_00007515_VioletaAmaya.Navigation.Screen
 
+// Definir el color pistacho
+val PistachioGreen = Color(0xFF93C572)
+
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     BottomAppBar(
-        containerColor = Color(0xFFF5C9B9),
+        containerColor = PistachioGreen,
         tonalElevation = 4.dp
     ) {
         Row(
@@ -28,7 +31,7 @@ fun BottomNavigationBar(navController: NavController) {
                 .padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            NavigationButton("Categorias") {
+            NavigationButton("Restaurantes") {
                 navController.navigate(Screen.Category.route)
             }
 
@@ -50,7 +53,7 @@ fun NavigationButton(text: String, onClick: () -> Unit) {
             text = text,
             fontWeight = FontWeight.Medium,
             fontSize = 16.sp,
-            color = Color(0xFFC2451F)
+            color = Color.White // Puedes cambiarlo a Color.Black si no hay buen contraste
         )
     }
 }

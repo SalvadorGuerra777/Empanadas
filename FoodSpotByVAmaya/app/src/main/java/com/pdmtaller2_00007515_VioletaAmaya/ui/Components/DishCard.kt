@@ -29,7 +29,7 @@ import com.pdmtaller2_00007515_VioletaAmaya.data.model.Dish
 @Composable
 fun DishCard(
     dish: Dish,
-    onBuyClick: (() -> Unit)? = null // lo use para que no siempre este activo el boton buy
+    onBuyClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = Modifier
